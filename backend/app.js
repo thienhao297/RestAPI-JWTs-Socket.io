@@ -5,10 +5,6 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const multer = require("multer");
-<<<<<<< HEAD
-const dotenv = require("dotenv");
-=======
->>>>>>> ddec02c8f1babd3af3b68d34ed08841cb7b8b63b
 
 const feedRoutes = require("./routes/feed");
 const authRoutes = require("./routes/auth");
