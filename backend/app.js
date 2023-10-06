@@ -5,13 +5,11 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const multer = require("multer");
-const dotenv = require("dotenv");
 
 const feedRoutes = require("./routes/feed");
 const authRoutes = require("./routes/auth");
 
 const app = express();
-dotenv.config();
 
 const PORT = process.env.PORT || 8080;
 
