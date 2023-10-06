@@ -5,7 +5,6 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const multer = require("multer");
-const { v4: uuidv4 } = require("uuid");
 const dotenv = require("dotenv");
 
 const feedRoutes = require("./routes/feed");
@@ -14,12 +13,14 @@ const authRoutes = require("./routes/auth");
 const app = express();
 dotenv.config();
 
+const PORT = process.env.PORT || 8080;
+
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
+  destination: (req, file, cb) => {
     cb(null, "images");
   },
-  filename: function (req, file, cb) {
-    cb(null, uuidv4());
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + "-" + file.originalname);
   },
 });
 
@@ -34,8 +35,6 @@ const fileFilter = (req, file, cb) => {
     cb(null, false);
   }
 };
-
-const MONGODB_URI = "yourURI";
 
 app.use(cors({ origin: "*" }));
 
@@ -56,9 +55,9 @@ app.use((error, req, res, next) => {
 });
 
 mongoose
-  .connect(MONGODB_URI)
+  .connect(process.env.MONGODB_URI)
   .then((result) => {
-    const server = app.listen(8080);
+    const server = app.listen(PORT);
     const io = require("./socket").init(server);
     io.on("connection", (socket) => {
       console.log("Client connected");
